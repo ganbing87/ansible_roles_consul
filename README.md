@@ -105,7 +105,7 @@ ansible-galaxy collection install community.general
 # mkdir -p /data/packages
 
 # ll
--rw-r--r--. 1 root root  43834194 1月  22 20:10 nexus-3.28.1-01-unix.tar.gz
+-rw-r--r--. 1 root root  43834194 1月  22 20:10 consul
 -rw-r--r--. 1 root root 194042837 1月  22 20:12 jdk-8u202-linux-x64.tar.gz
 -rw-r--r--. 1 root root  34632262 1月  22 20:12 python-virtualenv.tar.gz
 [root@localhost packages]# 
@@ -205,7 +205,7 @@ ulmit_config:
 ```
 
 ## 7、执行ansible-playbook命令
-说明：执行命令前，先检查nexus服务器的8081端口是否被占用，如被占用，需杀掉相关进程，或者修改all.yml中的nexus端口参数.  
+说明：执行命令前，先检查consul服务器的8500端口是否被占用，如被占用，需杀掉相关进程，或者修改all.yml中的nexus端口参数.  
 ```
 ansible-playbook -i inventories/hosts  consul.yml  -v
 ```
