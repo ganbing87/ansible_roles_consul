@@ -1,0 +1,29 @@
+---
+- name: Copy consul to server
+  copy:
+    src: "{{ local_packages_dir }}/consul"
+    dest: "/usr/bin/"
+    owner: "{{ appuser }}"
+    group: "{{ appuser }}"
+    mode: 0755
+
+- name: Create data dir
+  file:
+    state: directory
+    path: "{{ softlink_dir }}/consul"
+    owner: "{{ appuser }}"
+    group: "{{ appuser }}"
+
+- name: Add start file
+  template:
+    src: "start.sh.j2"
+    dest: "{{ softlink_dir }}/consul/start.sh"
+    mode: 0755
+    owner: "{{ appuser }}"
+    group: "{{ appuser }}"
+
+- name: Add systemctl start service file
+  template:
+    src: "consul.service.j2"
+    dest: /usr/lib/systemd/system/consul.service
+    mode: 0644

@@ -1,0 +1,7 @@
+---
+- name: include tasks
+  include_tasks:
+    "{{ item }}"
+  with_items:
+    - install.yml
+    - start.yml

@@ -1,0 +1,17 @@
+# {{ansible_managed}}
+
+[Unit]
+Description=consul
+After=network.target
+
+[Service]
+Type=forking
+User={{ appuser }}
+Group={{ appuser }}
+PrivateTmp=true
+LimitNOFILE={{ limit_nofile }}
+LimitNPROC={{ limit_nproc }}
+ExecStart={{ softlink_dir }}/consul/start.sh
+
+[Install]
+WantedBy=multi-user.target

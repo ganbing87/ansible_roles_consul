@@ -1,0 +1,26 @@
+- name: Start Consul
+  systemd:
+    name: consul
+    state: started
+    daemon_reload: yes
+
+- name: wait for consul to start
+  wait_for:
+    host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+    port: "{{ consul_port }}"
+    timeout: 30
+
+- name: register consul to consul
+  uri:
+    url: "http://{{ groups['consul'][0] }}:{{ consul_port }}/v1/agent/service/register"
+    method: PUT
+    body_format: json
+    body:
+      Name: consul
+      ID: "consul_{{ inventory_hostname }}"
+      Address: "{{ inventory_hostname }}"
+      Port: "{{ consul_port }}"
+      Check:
+        DeregisterCriticalServiceAfter: "5m"
+        TCP: "{{ inventory_hostname }}:{{ consul_port }}"
+        Interval: "5s"
